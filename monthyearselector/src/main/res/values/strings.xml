@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MonthYearSelector</string>
+    <string name="monthyear_month_title">MONTH</string>
+    <string name="monthyear_year_title">YEAR</string>
 </resources>
