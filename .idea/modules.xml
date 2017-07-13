@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MonthYearSelectorSample.iml" filepath="$PROJECT_DIR$/MonthYearSelectorSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/monthyearselector/monthyearselector.iml" filepath="$PROJECT_DIR$/monthyearselector/monthyearselector.iml" />
+    </modules>
+  </component>
+</project>

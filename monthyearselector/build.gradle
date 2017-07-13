@@ -1,0 +1,64 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'android-month-year-selector'
+
+    publishedGroupId = 'com.github.fernandospr'
+    libraryName = 'android-monthyearselector'
+    artifact = 'monthyearselector'
+
+    libraryDescription = 'A view that allows to select a month and a year'
+
+    siteUrl = 'https://github.com/fernandospr/android-month-year-selector'
+    gitUrl = 'https://github.com/fernandospr/android-month-year-selector.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'fernandospr'
+    developerName = 'Fernando Sproviero'
+    developerEmail = 'fernandospr@gmail.com'
+
+    licenseName = 'MIT'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+configurations {
+    javadocDeps
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    javadocDeps 'com.android.support:support-annotations:25.3.1'
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'javadoc') {
+        task.configure {
+            classpath += configurations.javadocDeps
+        }
+    }
+}
+
+apply from: '../install.gradle'
+apply from: '../bintray.gradle'
