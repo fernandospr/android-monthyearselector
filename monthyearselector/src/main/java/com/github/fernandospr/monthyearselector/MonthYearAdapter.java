@@ -1,6 +1,8 @@
 package com.github.fernandospr.monthyearselector;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.View
 
     private final List<Integer> mItems;
     private Listener mListener;
+    private int mSelectedPosition = -1;
 
     public MonthYearAdapter(List<Integer> items) {
         this.mItems = items;
@@ -31,6 +34,7 @@ public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.View
     public void onBindViewHolder(MonthYearAdapter.ViewHolder holder, int position) {
         Integer item = mItems.get(position);
         holder.mTitle.setText(String.format(Locale.getDefault(), "%02d", item));
+        holder.mTitle.setBackgroundColor(mSelectedPosition == position ? ContextCompat.getColor(holder.mTitle.getContext(), R.color.monthyear_item_selected_color) : Color.TRANSPARENT);
     }
 
     @Override
@@ -40,6 +44,15 @@ public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.View
 
     public void setListener(Listener mListener) {
         this.mListener = mListener;
+    }
+
+    public void setSelected(int position) {
+        int previouslySelectedPosition = mSelectedPosition;
+        mSelectedPosition = position;
+        if (previouslySelectedPosition != -1) {
+            notifyItemChanged(previouslySelectedPosition);
+        }
+        notifyItemChanged(mSelectedPosition);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

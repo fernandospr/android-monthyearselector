@@ -4,4 +4,5 @@
     <color name="monthyear_month_title_color">#ffffff</color>
     <color name="monthyear_year_title_color">#ffffff</color>
     <color name="monthyear_items_title_color">#ffffff</color>
+    <color name="monthyear_item_selected_color">#80ffffff</color>
 </resources>

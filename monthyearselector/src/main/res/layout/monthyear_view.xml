@@ -2,25 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="190dp"
     android:background="@color/monthyear_background"
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_weight="1"
         android:orientation="vertical"
+
         tools:background="#f00">
 
         <TextView
             android:id="@+id/tvMonthTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="@string/monthyear_month_title"
             android:textColor="@color/monthyear_month_title_color"
@@ -36,8 +34,6 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:orientation="vertical"
         tools:background="#ff0">
@@ -46,8 +42,7 @@
             android:id="@+id/tvYearTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:text="@string/monthyear_year_title"
             android:textColor="@color/monthyear_year_title_color"

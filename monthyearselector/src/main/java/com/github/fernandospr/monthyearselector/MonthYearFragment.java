@@ -74,8 +74,8 @@ public class MonthYearFragment extends Fragment {
         RecyclerView monthList = (RecyclerView) view.findViewById(R.id.rvMonth);
         RecyclerView yearList = (RecyclerView) view.findViewById(R.id.rvYear);
 
-        MonthYearAdapter monthsAdapter = new MonthYearAdapter(mMonths);
-        MonthYearAdapter yearsAdapter = new MonthYearAdapter(mYears);
+        final MonthYearAdapter monthsAdapter = new MonthYearAdapter(mMonths);
+        final MonthYearAdapter yearsAdapter = new MonthYearAdapter(mYears);
         monthList.setAdapter(monthsAdapter);
         yearList.setAdapter(yearsAdapter);
         monthList.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -88,6 +88,7 @@ public class MonthYearFragment extends Fragment {
                 if (mListener != null) {
                     mListener.onMonthClick(mSelectedMonth);
                 }
+                monthsAdapter.setSelected(position);
             }
         });
         yearsAdapter.setListener(new MonthYearAdapter.Listener() {
@@ -97,6 +98,7 @@ public class MonthYearFragment extends Fragment {
                 if (mListener != null) {
                     mListener.onYearClick(mSelectedYear);
                 }
+                yearsAdapter.setSelected(position);
             }
         });
     }
