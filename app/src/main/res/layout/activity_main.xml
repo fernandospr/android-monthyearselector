@@ -7,20 +7,15 @@
     android:orientation="vertical"
     tools:context="com.github.fernandospr.monthyearselectorsample.MainActivity">
 
-    <Button
-        android:id="@+id/bPickMonthYear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pick Month/Year" />
-
     <TextView
         android:id="@+id/tvMonthYearSelected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bPickMonthYear"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:textSize="40sp"
-        tools:text="12/2020" />
+        android:textColor="@color/colorHint"
+        android:text="MM/YYYY"
+        android:textSize="40sp" />
 
     <FrameLayout
         android:id="@+id/flMonthYearSelector"

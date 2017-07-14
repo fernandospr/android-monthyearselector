@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
         setContentView(R.layout.activity_main);
         mSelectedMonthYearTextView = (TextView) findViewById(R.id.tvMonthYearSelected);
 
-        findViewById(R.id.bPickMonthYear).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tvMonthYearSelected).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showMonthYearSelector();
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
         List<Integer> years = new ArrayList<>(yearsCount);
 
         for (int i = 0; i < monthsCount; i++) {
-            months.add(i+1);
+            months.add(i + 1);
         }
 
         for (int i = 0; i < yearsCount; i++) {
@@ -74,11 +78,23 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
         String value = "";
         if (mSelectedMonth != 0) {
             value += String.format(Locale.getDefault(), "%02d", mSelectedMonth);
+        } else {
+            value += "MM";
         }
         value += "/";
         if (mSelectedYear != 0) {
-            value += String.format(Locale.getDefault(), "%02d", mSelectedYear);
+            value += String.format(Locale.getDefault(), "%d", mSelectedYear);
+        } else {
+            value += "YYYY";
         }
-        mSelectedMonthYearTextView.setText(value);
+
+        SpannableString spannableValue = new SpannableString(value);
+        if (mSelectedMonth != 0) {
+            spannableValue.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)), 0, 3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        if (mSelectedYear != 0) {
+            spannableValue.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)), 3, 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        mSelectedMonthYearTextView.setText(spannableValue);
     }
 }
