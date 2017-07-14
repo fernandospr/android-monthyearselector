@@ -91,6 +91,6 @@ public class MonthYearFragment extends Fragment {
 
     public interface Listener {
         void onMonthClick(int month);
-        void onYearClick(int month);
+        void onYearClick(int year);
     }
 }

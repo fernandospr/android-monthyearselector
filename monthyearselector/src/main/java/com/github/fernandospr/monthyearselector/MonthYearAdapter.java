@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.ViewHolder> {
 
@@ -29,7 +30,7 @@ public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.View
     @Override
     public void onBindViewHolder(MonthYearAdapter.ViewHolder holder, int position) {
         Integer item = mItems.get(position);
-        holder.mTitle.setText(String.valueOf(item));
+        holder.mTitle.setText(String.format(Locale.getDefault(), "%02d", item));
     }
 
     @Override
