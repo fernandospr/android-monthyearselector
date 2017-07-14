@@ -14,12 +14,17 @@ import java.util.List;
 
 public class MonthYearFragment extends Fragment {
 
-    public static final String MONTHS = "months";
-    public static final String YEARS = "years";
+    private static final String MONTHS = "months";
+    private static final String YEARS = "years";
+    private static final String SELECTED_MONTH = "selectedMonth";
+    private static final String SELECTED_YEAR = "selectedYear";
 
     private Listener mListener;
     private List<Integer> mMonths;
     private List<Integer> mYears;
+
+    private int mSelectedMonth;
+    private int mSelectedYear;
 
     public MonthYearFragment() {
     }
@@ -38,14 +43,25 @@ public class MonthYearFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mMonths = getArguments().getIntegerArrayList(MONTHS);
         mYears = getArguments().getIntegerArrayList(YEARS);
+        if (savedInstanceState != null) {
+            mSelectedMonth = savedInstanceState.getInt(SELECTED_MONTH);
+            mSelectedYear = savedInstanceState.getInt(SELECTED_YEAR);
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Listener){
-            this.mListener = (Listener) context;
+            mListener = (Listener) context;
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_MONTH, mSelectedMonth);
+        outState.putInt(SELECTED_YEAR, mSelectedYear);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -68,16 +84,18 @@ public class MonthYearFragment extends Fragment {
         monthsAdapter.setListener(new MonthYearAdapter.Listener() {
             @Override
             public void onItemClick(int position) {
+                mSelectedMonth = mMonths.get(position);
                 if (mListener != null) {
-                    mListener.onMonthClick(mMonths.get(position));
+                    mListener.onMonthClick(mSelectedMonth);
                 }
             }
         });
         yearsAdapter.setListener(new MonthYearAdapter.Listener() {
             @Override
             public void onItemClick(int position) {
+                mSelectedYear = mYears.get(position);
                 if (mListener != null) {
-                    mListener.onYearClick(mYears.get(position));
+                    mListener.onYearClick(mSelectedYear);
                 }
             }
         });
@@ -86,7 +104,15 @@ public class MonthYearFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        this.mListener = null;
+        mListener = null;
+    }
+
+    public int getSelectedMonth() {
+        return mSelectedMonth;
+    }
+
+    public int getSelectedYear() {
+        return mSelectedYear;
     }
 
     public interface Listener {
