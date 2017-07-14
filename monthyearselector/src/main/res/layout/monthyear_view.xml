@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="180dp"
+    android:background="@color/monthyear_background"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -20,13 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/monthyear_month_title"
+            android:textColor="@color/monthyear_month_title_color"
             android:textSize="12sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMonth"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,13 +48,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/monthyear_year_title"
+            android:textColor="@color/monthyear_year_title_color"
             android:textSize="12sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvYear"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </LinearLayout>

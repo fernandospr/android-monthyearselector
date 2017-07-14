@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="monthyear_background">#9e9e9e</color>
+    <color name="monthyear_month_title_color">#ffffff</color>
+    <color name="monthyear_year_title_color">#ffffff</color>
+    <color name="monthyear_items_title_color">#ffffff</color>
+</resources>

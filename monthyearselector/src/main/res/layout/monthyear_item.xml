@@ -7,4 +7,5 @@
     android:background="?attr/selectableItemBackground"
     android:gravity="center"
     android:padding="8dp"
+    android:textColor="@color/monthyear_items_title_color"
     tools:text="2017" />
