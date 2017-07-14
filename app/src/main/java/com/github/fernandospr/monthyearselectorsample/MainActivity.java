@@ -1,13 +1,84 @@
 package com.github.fernandospr.monthyearselectorsample;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.github.fernandospr.monthyearselector.MonthYearFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity implements MonthYearFragment.Listener {
+
+    private int mSelectedMonth;
+    private int mSelectedYear;
+    private TextView mSelectedMonthYearTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mSelectedMonthYearTextView = (TextView) findViewById(R.id.tvMonthYearSelected);
+
+        findViewById(R.id.bPickMonthYear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMonthYearSelector();
+            }
+        });
+    }
+
+    private void showMonthYearSelector() {
+        int monthsCount = 12;
+        int yearsCount = 100;
+        List<Integer> months = new ArrayList<>(monthsCount);
+        List<Integer> years = new ArrayList<>(yearsCount);
+
+        for (int i = 0; i < monthsCount; i++) {
+            months.add(i+1);
+        }
+
+        for (int i = 0; i < yearsCount; i++) {
+            years.add(2017 + i);
+        }
+
+        FragmentManager manager = getSupportFragmentManager();
+        manager.popBackStack();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
+        Fragment fragment = MonthYearFragment.newInstance(months, years);
+        transaction.replace(R.id.flMonthYearSelector, fragment);
+        transaction.addToBackStack(fragment.getClass().getSimpleName());
+        transaction.commit();
+    }
+
+    @Override
+    public void onMonthClick(int month) {
+        mSelectedMonth = month;
+        updateSelectedMonthYear();
+    }
+
+    @Override
+    public void onYearClick(int year) {
+        mSelectedYear = year;
+        updateSelectedMonthYear();
+    }
+
+    private void updateSelectedMonthYear() {
+        String value = "";
+        if (mSelectedMonth != 0) {
+            value += String.format(Locale.getDefault(), "%02d", mSelectedMonth);
+        }
+        value += "/";
+        if (mSelectedYear != 0) {
+            value += String.format(Locale.getDefault(), "%02d", mSelectedYear);
+        }
+        mSelectedMonthYearTextView.setText(value);
     }
 }
