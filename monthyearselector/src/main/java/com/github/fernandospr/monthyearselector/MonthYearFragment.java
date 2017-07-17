@@ -38,11 +38,24 @@ public class MonthYearFragment extends Fragment {
         return fragment;
     }
 
+    public static MonthYearFragment newInstance(List<Integer> months, List<Integer> years, int selectedMonth, int selectedYear) {
+        MonthYearFragment fragment = new MonthYearFragment();
+        Bundle args = new Bundle();
+        args.putIntegerArrayList(MONTHS, new ArrayList<>(months));
+        args.putIntegerArrayList(YEARS, new ArrayList<>(years));
+        args.putInt(SELECTED_MONTH, selectedMonth);
+        args.putInt(SELECTED_YEAR, selectedYear);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMonths = getArguments().getIntegerArrayList(MONTHS);
         mYears = getArguments().getIntegerArrayList(YEARS);
+        mSelectedMonth = getArguments().getInt(SELECTED_MONTH, 0);
+        mSelectedYear = getArguments().getInt(SELECTED_YEAR, 0);
         if (savedInstanceState != null) {
             mSelectedMonth = savedInstanceState.getInt(SELECTED_MONTH);
             mSelectedYear = savedInstanceState.getInt(SELECTED_YEAR);
@@ -74,8 +87,8 @@ public class MonthYearFragment extends Fragment {
         RecyclerView monthList = (RecyclerView) view.findViewById(R.id.rvMonth);
         RecyclerView yearList = (RecyclerView) view.findViewById(R.id.rvYear);
 
-        final MonthYearAdapter monthsAdapter = new MonthYearAdapter(mMonths);
-        final MonthYearAdapter yearsAdapter = new MonthYearAdapter(mYears);
+        final MonthYearAdapter monthsAdapter = new MonthYearAdapter(mMonths, getSelectedMonthPosition());
+        final MonthYearAdapter yearsAdapter = new MonthYearAdapter(mYears, getSelectedYearPosition());
         monthList.setAdapter(monthsAdapter);
         yearList.setAdapter(yearsAdapter);
         monthList.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -101,6 +114,27 @@ public class MonthYearFragment extends Fragment {
                 yearsAdapter.setSelected(position);
             }
         });
+    }
+
+    private int getSelectedYearPosition() {
+        return getPositionForValue(mYears, mSelectedYear);
+    }
+
+    private int getSelectedMonthPosition() {
+        return getPositionForValue(mMonths, mSelectedMonth);
+    }
+
+    private int getPositionForValue(List<Integer> values, int value) {
+        if (value == 0) {
+            return -1;
+        }
+        for (int i = 0; i < values.size(); i++) {
+            int item = values.get(i);
+            if (item == value) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
         manager.popBackStack();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
-        Fragment fragment = MonthYearFragment.newInstance(months, years);
+        Fragment fragment = MonthYearFragment.newInstance(months, years, mSelectedMonth, mSelectedYear);
         transaction.replace(R.id.flMonthYearSelector, fragment);
         transaction.addToBackStack(fragment.getClass().getSimpleName());
         transaction.commit();

@@ -18,8 +18,9 @@ public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.View
     private Listener mListener;
     private int mSelectedPosition = -1;
 
-    public MonthYearAdapter(List<Integer> items) {
+    public MonthYearAdapter(List<Integer> items, int selectedPosition) {
         this.mItems = items;
+        this.mSelectedPosition = selectedPosition;
     }
 
     @Override
