@@ -258,11 +258,10 @@ public class MonthYearFragment extends Fragment {
                                         Fragment fragment,
                                         int containerViewId,
                                         boolean addToBackStack,
-                                        int enter,
-                                        int exit) {
+                                        int enter) {
         FragmentManager manager = activity.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.setCustomAnimations(enter, exit);
+        transaction.setCustomAnimations(enter, 0);
         transaction.replace(containerViewId, fragment);
         if (addToBackStack) {
             transaction.addToBackStack(fragment.getClass().getSimpleName());
@@ -275,6 +274,6 @@ public class MonthYearFragment extends Fragment {
                                         Fragment fragment,
                                         int containerViewId,
                                         boolean addToBackStack) {
-        return showFragment(activity, fragment, containerViewId, addToBackStack, 0, 0);
+        return showFragment(activity, fragment, containerViewId, addToBackStack, 0);
     }
 }

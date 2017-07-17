@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
                 mFragment,
                 R.id.flMonthYearSelector,
                 true,
-                R.anim.monthyear_anim_enter,
-                R.anim.monthyear_anim_exit);
+                R.anim.monthyear_anim_enter);
     }
 
     private static int getCurrentYear() {
