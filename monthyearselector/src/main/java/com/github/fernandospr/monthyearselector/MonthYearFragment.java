@@ -3,6 +3,9 @@ package com.github.fernandospr.monthyearselector;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,16 +32,7 @@ public class MonthYearFragment extends Fragment {
     public MonthYearFragment() {
     }
 
-    public static MonthYearFragment newInstance(List<Integer> months, List<Integer> years) {
-        MonthYearFragment fragment = new MonthYearFragment();
-        Bundle args = new Bundle();
-        args.putIntegerArrayList(MONTHS, new ArrayList<>(months));
-        args.putIntegerArrayList(YEARS, new ArrayList<>(years));
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static MonthYearFragment newInstance(List<Integer> months, List<Integer> years, int selectedMonth, int selectedYear) {
+    private static MonthYearFragment newInstance(List<Integer> months, List<Integer> years, int selectedMonth, int selectedYear) {
         MonthYearFragment fragment = new MonthYearFragment();
         Bundle args = new Bundle();
         args.putIntegerArrayList(MONTHS, new ArrayList<>(months));
@@ -65,7 +59,7 @@ public class MonthYearFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof Listener){
+        if (context instanceof Listener) {
             mListener = (Listener) context;
         }
     }
@@ -153,6 +147,61 @@ public class MonthYearFragment extends Fragment {
 
     public interface Listener {
         void onMonthClick(int month);
+
         void onYearClick(int year);
+    }
+
+    public static class Builder {
+
+        private final List<Integer> mMonths;
+        private final List<Integer> mYears;
+        private int mSelectedMonth = 0;
+        private int mSelectedYear = 0;
+
+        public Builder(List<Integer> months, List<Integer> years) {
+            this.mMonths = months;
+            this.mYears = years;
+        }
+
+        public Builder withSelectedMonth(int selectedMonth) {
+            this.mSelectedMonth = selectedMonth;
+            return this;
+        }
+
+        public Builder withSelectedYear(int selectedYear) {
+            this.mSelectedYear = selectedYear;
+            return this;
+        }
+
+        public MonthYearFragment build() {
+            return MonthYearFragment.newInstance(mMonths, mYears, mSelectedMonth, mSelectedYear);
+        }
+    }
+
+    public static void hideFragment(FragmentActivity activity,
+                                    Fragment fragment) {
+        if (fragment != null) {
+            FragmentManager manager = activity.getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.remove(fragment);
+            transaction.commit();
+        }
+    }
+
+    public static Fragment showFragment(FragmentActivity activity,
+                                        Fragment fragment,
+                                        int containerViewId,
+                                        boolean addToBackStack,
+                                        int enter,
+                                        int exit) {
+        FragmentManager manager = activity.getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.setCustomAnimations(enter, exit);
+        transaction.replace(containerViewId, fragment);
+        if (addToBackStack) {
+            transaction.addToBackStack(fragment.getClass().getSimpleName());
+        }
+        transaction.commit();
+        return fragment;
     }
 }

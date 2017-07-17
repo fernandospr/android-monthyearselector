@@ -2,8 +2,6 @@ package com.github.fernandospr.monthyearselectorsample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
@@ -23,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
     private int mSelectedMonth;
     private int mSelectedYear;
     private TextView mSelectedMonthYearTextView;
+    private Fragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +51,13 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
             years.add(2017 + i);
         }
 
-        FragmentManager manager = getSupportFragmentManager();
-        manager.popBackStack();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter, R.anim.exit);
-        Fragment fragment = MonthYearFragment.newInstance(months, years, mSelectedMonth, mSelectedYear);
-        transaction.replace(R.id.flMonthYearSelector, fragment);
-        transaction.addToBackStack(fragment.getClass().getSimpleName());
-        transaction.commit();
+        MonthYearFragment.hideFragment(this, mFragment);
+
+        MonthYearFragment.Builder b = new MonthYearFragment.Builder(months, years);
+        b.withSelectedMonth(mSelectedMonth);
+        b.withSelectedYear(mSelectedYear);
+        mFragment = b.build();
+        MonthYearFragment.showFragment(this, mFragment, R.id.flMonthYearSelector, true, R.anim.enter, R.anim.exit);
     }
 
     @Override
