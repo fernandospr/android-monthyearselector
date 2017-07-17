@@ -38,28 +38,34 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
     private void showMonthYearSelector() {
         MonthYearFragment.hideFragment(this, mFragment);
 
-        MonthYearFragment.Builder b = new MonthYearFragment.Builder()
+        MonthYearFragment.Builder builder = new MonthYearFragment.Builder()
                 .withAllMonths()
                 .withYears(2017, 2050)
                 .withSelectedMonth(mSelectedMonth)
                 .withSelectedYear(mSelectedYear);
-        mFragment = b.build();
-        MonthYearFragment.showFragment(this, mFragment, R.id.flMonthYearSelector, true, R.anim.monthyear_anim_enter, R.anim.monthyear_anim_exit);
+        mFragment = builder.build();
+
+        MonthYearFragment.showFragment(this,
+                mFragment,
+                R.id.flMonthYearSelector,
+                true,
+                R.anim.monthyear_anim_enter,
+                R.anim.monthyear_anim_exit);
     }
 
     @Override
     public void onMonthClick(int month) {
         mSelectedMonth = month;
-        updateSelectedMonthYear();
+        updateSelectedMonthYearTextView();
     }
 
     @Override
     public void onYearClick(int year) {
         mSelectedYear = year;
-        updateSelectedMonthYear();
+        updateSelectedMonthYearTextView();
     }
 
-    private void updateSelectedMonthYear() {
+    private void updateSelectedMonthYearTextView() {
         String value = "";
         if (mSelectedMonth != 0) {
             value += String.format(Locale.getDefault(), "%02d", mSelectedMonth);

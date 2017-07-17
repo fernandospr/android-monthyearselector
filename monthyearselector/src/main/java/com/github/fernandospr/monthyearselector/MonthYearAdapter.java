@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
-public class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.ViewHolder> {
+class MonthYearAdapter extends RecyclerView.Adapter<MonthYearAdapter.ViewHolder> {
 
     private final List<Integer> mItems;
     private Listener mListener;
