@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.fernandospr.monthyearselector.utils.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,8 +161,21 @@ public class MonthYearFragment extends Fragment {
         private int mSelectedYear = 0;
 
         public Builder(List<Integer> months, List<Integer> years) {
+            if (!validate(months, years)) {
+                throw new IllegalArgumentException("Invalid months/years. " +
+                        "Months must be between 1 and 12 inclusive, years must be positive. " +
+                        "Months: " + months + " " +
+                        "Years: " + years);
+            }
             this.mMonths = months;
             this.mYears = years;
+        }
+
+        private boolean validate(List<Integer> months, List<Integer> years) {
+            return months != null
+                    && years != null
+                    && CollectionUtils.containsAllBetween(months, 0, 13)
+                    && CollectionUtils.containsAllGreaterThan(years, -1);
         }
 
         public Builder withSelectedMonth(int selectedMonth) {
