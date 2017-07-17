@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="190dp"
-    android:background="@color/monthyear_background"
+    android:background="@color/monthyear_background_color"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -11,7 +11,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-
         tools:background="#f00">
 
         <TextView
@@ -22,7 +21,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/monthyear_month_title"
             android:textColor="@color/monthyear_month_title_color"
-            android:textSize="12sp" />
+            android:textSize="@dimen/monthyear_month_title_size" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMonth"
@@ -46,7 +45,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/monthyear_year_title"
             android:textColor="@color/monthyear_year_title_color"
-            android:textSize="12sp" />
+            android:textSize="@dimen/monthyear_year_title_size" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvYear"

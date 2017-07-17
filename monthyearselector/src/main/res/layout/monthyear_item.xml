@@ -4,10 +4,9 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
     android:gravity="center"
     android:padding="8dp"
     android:textColor="@color/monthyear_items_title_color"
-    android:textSize="18sp"
+    android:textSize="@dimen/monthyear_items_title_size"
     tools:background="#f00"
     tools:text="2017" />
