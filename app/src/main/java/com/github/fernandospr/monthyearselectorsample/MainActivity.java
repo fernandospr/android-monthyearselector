@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.github.fernandospr.monthyearselector.MonthYearFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MonthYearFragment.Listener {
@@ -38,26 +36,15 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
     }
 
     private void showMonthYearSelector() {
-        int monthsCount = 12;
-        int yearsCount = 100;
-        List<Integer> months = new ArrayList<>(monthsCount);
-        List<Integer> years = new ArrayList<>(yearsCount);
-
-        for (int i = 0; i < monthsCount; i++) {
-            months.add(i + 1);
-        }
-
-        for (int i = 0; i < yearsCount; i++) {
-            years.add(2017 + i);
-        }
-
         MonthYearFragment.hideFragment(this, mFragment);
 
-        MonthYearFragment.Builder b = new MonthYearFragment.Builder(months, years);
-        b.withSelectedMonth(mSelectedMonth);
-        b.withSelectedYear(mSelectedYear);
+        MonthYearFragment.Builder b = new MonthYearFragment.Builder()
+                .withAllMonths()
+                .withYears(2017, 2050)
+                .withSelectedMonth(mSelectedMonth)
+                .withSelectedYear(mSelectedYear);
         mFragment = b.build();
-        MonthYearFragment.showFragment(this, mFragment, R.id.flMonthYearSelector, true, R.anim.enter, R.anim.exit);
+        MonthYearFragment.showFragment(this, mFragment, R.id.flMonthYearSelector, true, R.anim.monthyear_anim_enter, R.anim.monthyear_anim_exit);
     }
 
     @Override

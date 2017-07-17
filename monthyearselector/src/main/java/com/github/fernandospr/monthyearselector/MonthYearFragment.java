@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.fernandospr.monthyearselector.utils.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,18 +153,47 @@ public class MonthYearFragment extends Fragment {
 
     public static class Builder {
 
-        private final List<Integer> mMonths;
-        private final List<Integer> mYears;
+        private List<Integer> mMonths;
+        private List<Integer> mYears;
         private int mSelectedMonth = 0;
         private int mSelectedYear = 0;
 
-        public Builder(List<Integer> months, List<Integer> years) {
-            if (!validate(months, years)) {
-                throw new IllegalArgumentException("Invalid months/years. " +
-                        "Months must be between 1 and 12 inclusive, years must be positive. " +
-                        "Months: " + months + " " +
-                        "Years: " + years);
+        public Builder() {
+        }
+
+        public Builder withAllMonths() {
+            mMonths = new ArrayList<>(12);
+            for (int i = 0; i < 12; i++) {
+                mMonths.add(i + 1);
             }
+            return this;
+        }
+
+        public Builder withMonths(int... months) {
+            mMonths = new ArrayList<>(months.length);
+            for (int month : months) {
+                mMonths.add(month);
+            }
+            return this;
+        }
+
+        public Builder withYears(int fromYear, int toYear) {
+            mYears = new ArrayList<>(toYear-fromYear+1);
+            for (int i = fromYear; i <= toYear; i++) {
+                mYears.add(i);
+            }
+            return this;
+        }
+
+        public Builder withYears(int... years) {
+            mYears = new ArrayList<>(years.length);
+            for (int month : years) {
+                mYears.add(month);
+            }
+            return this;
+        }
+
+        public Builder(List<Integer> months, List<Integer> years) {
             this.mMonths = months;
             this.mYears = years;
         }
@@ -189,6 +216,12 @@ public class MonthYearFragment extends Fragment {
         }
 
         public MonthYearFragment build() {
+            if (!validate(mMonths, mYears)) {
+                throw new IllegalArgumentException("Invalid months/years. " +
+                        "Months must be between 1 and 12 inclusive, years must be positive. " +
+                        "Months: " + mMonths + " " +
+                        "Years: " + mYears);
+            }
             return MonthYearFragment.newInstance(mMonths, mYears, mSelectedMonth, mSelectedYear);
         }
     }
