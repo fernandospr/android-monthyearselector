@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MonthYearFragment extends Fragment {
@@ -170,40 +171,49 @@ public class MonthYearFragment extends Fragment {
         }
 
         public Builder withAllMonths() {
-            mMonths = new ArrayList<>(12);
-            for (int i = 0; i < 12; i++) {
-                mMonths.add(i + 1);
-            }
-            return this;
+            return withMonths(1, 12);
         }
 
-        public Builder withMonths(int... months) {
-            mMonths = new ArrayList<>(months.length);
+        public Builder withMonths(int[] months) {
+            List<Integer> list = new ArrayList<>(months.length);
             for (int month : months) {
-                mMonths.add(month);
+                list.add(month);
             }
-            return this;
+            return withMonths(list);
+        }
+
+        public Builder withMonths(int fromMonth, int toMonth) {
+            List<Integer> list = new ArrayList<>(toMonth-fromMonth+1);
+            for (int i = fromMonth; i <= toMonth; i++) {
+                list.add(i);
+            }
+            return withMonths(list);
+        }
+
+        public Builder withYears(int[] years) {
+            List<Integer> list = new ArrayList<>(years.length);
+            for (int year : years) {
+                list.add(year);
+            }
+            return withYears(list);
         }
 
         public Builder withYears(int fromYear, int toYear) {
-            mYears = new ArrayList<>(toYear-fromYear+1);
+            List<Integer> list = new ArrayList<>(toYear-fromYear+1);
             for (int i = fromYear; i <= toYear; i++) {
-                mYears.add(i);
+                list.add(i);
             }
+            return withYears(list);
+        }
+
+        private Builder withMonths(List<Integer> months) {
+            mMonths = Collections.unmodifiableList(months);
             return this;
         }
 
-        public Builder withYears(int... years) {
-            mYears = new ArrayList<>(years.length);
-            for (int month : years) {
-                mYears.add(month);
-            }
+        private Builder withYears(List<Integer> years) {
+            mYears = Collections.unmodifiableList(years);
             return this;
-        }
-
-        public Builder(List<Integer> months, List<Integer> years) {
-            this.mMonths = months;
-            this.mYears = years;
         }
 
         private boolean validate(List<Integer> months, List<Integer> years) {
@@ -234,8 +244,8 @@ public class MonthYearFragment extends Fragment {
         }
     }
 
-    public static void hideFragment(FragmentActivity activity,
-                                    Fragment fragment) {
+    public static void removeFragment(FragmentActivity activity,
+                                      Fragment fragment) {
         if (fragment != null) {
             FragmentManager manager = activity.getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -259,5 +269,12 @@ public class MonthYearFragment extends Fragment {
         }
         transaction.commit();
         return fragment;
+    }
+
+    public static Fragment showFragment(FragmentActivity activity,
+                                        Fragment fragment,
+                                        int containerViewId,
+                                        boolean addToBackStack) {
+        return showFragment(activity, fragment, containerViewId, addToBackStack, 0, 0);
     }
 }

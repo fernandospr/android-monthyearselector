@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.github.fernandospr.monthyearselector.MonthYearFragment;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MonthYearFragment.Listener {
@@ -36,11 +37,13 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
     }
 
     private void showMonthYearSelector() {
-        MonthYearFragment.hideFragment(this, mFragment);
+        MonthYearFragment.removeFragment(this, mFragment);
+
+        int currentYear = getCurrentYear();
 
         MonthYearFragment.Builder builder = new MonthYearFragment.Builder()
                 .withAllMonths()
-                .withYears(2017, 2050)
+                .withYears(currentYear, currentYear + 50)
                 .withSelectedMonth(mSelectedMonth)
                 .withSelectedYear(mSelectedYear);
         mFragment = builder.build();
@@ -51,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements MonthYearFragment
                 true,
                 R.anim.monthyear_anim_enter,
                 R.anim.monthyear_anim_exit);
+    }
+
+    private static int getCurrentYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
     }
 
     @Override
